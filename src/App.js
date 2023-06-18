@@ -1,8 +1,21 @@
+import { useState, useEffect } from "react"
 import "./App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMinusCircle, faPlus } from "@fortawesome/free-solid-svg-icons"
 
 const App = () => {
+
+  const [recipes, setRecipes] = useState([])
+
+  useEffect(() => {
+    const path = '/recipes.json'
+    fetch(path) //this returns a fetch response, which has metadata about the server response attached to it, in addition to the actual data
+      .then(recipesResponse => recipesResponse.json()) //need this every time you use fetch b/c this is converting the response data in a json object. recipesResponse.json() is used to get the data
+      .then(recipes => {
+        setRecipes(recipes)
+      })
+  }, [])
+
   return (
   <div id="the-app">
     <header className="app-header">
